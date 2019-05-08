@@ -1,0 +1,15 @@
+jobs:
+- job: windows_build
+  pool:
+    vmImage: 'VS2017-Win2016'
+
+  - script: |
+      dotnet pack src\Quamotion.Malaga\Quamotion.Malaga.csproj -c Release -o $(Build.ArtifactStagingDirectory)
+    displayName: Build and pack
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: malaga
+    displayName: Publish Quamotion.Malaga
+    condition: always()
