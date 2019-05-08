@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,6 +38,26 @@ namespace Quamotion.Malaga
 
             return this.Execute(
                 WdaDriverCommand.LaunchApp, parameters);
+        }
+
+        public IWebElement FindElementByClassChain(string classChain)
+        {
+            return this.FindElement("class chain", classChain);
+        }
+
+        public ReadOnlyCollection<IWebElement> FindElementsByClassChain(string classChain)
+        {
+            return this.FindElements("class chain", classChain);
+        }
+
+        public IWebElement FindElementByPredicateString(string classChain)
+        {
+            return this.FindElement("predicate string", classChain);
+        }
+
+        public ReadOnlyCollection<IWebElement> FindElementsByPredicateString(string classChain)
+        {
+            return this.FindElements("predicate string", classChain);
         }
     }
 }
