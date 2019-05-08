@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OpenQA.Selenium.Remote;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Quamotion.Malaga.Tests
@@ -27,6 +28,74 @@ namespace Quamotion.Malaga.Tests
                 {
                     { "bundleId", "mobi.quamotion.app" },
                     { "shouldWaitForQuiescence", false }
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void FindElementByClassChainTest()
+        {
+            this.driver.FindElementByClassChain("my-class-chain");
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(DriverCommand.FindElement, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "using", "class chain" },
+                    { "value", "my-class-chain" }
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void FindElementsByClassChainTest()
+        {
+            this.driver.FindElementsByClassChain("another-class-chain");
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(DriverCommand.FindElements, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "using", "class chain" },
+                    { "value", "another-class-chain" }
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void FindElementByPredicateStringTest()
+        {
+            this.driver.FindElementByPredicateString("my-predicate-string");
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(DriverCommand.FindElement, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "using", "predicate string" },
+                    { "value", "my-predicate-string" }
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void FindElementsByPredicateStringTest()
+        {
+            this.driver.FindElementsByPredicateString("another-predicate-string");
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(DriverCommand.FindElements, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "using", "predicate string" },
+                    { "value", "another-predicate-string" }
                 },
                 command.Parameters);
         }
