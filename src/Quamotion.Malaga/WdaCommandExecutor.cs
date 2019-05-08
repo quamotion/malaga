@@ -12,6 +12,7 @@ namespace Quamotion.Malaga
             : base(addressOfRemoteServer, timeout)
         {
             this.sessionId = sessionId;
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.LaunchApp, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/launch"));
         }
 
         public override Response Execute(Command commandToExecute)
