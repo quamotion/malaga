@@ -8,6 +8,7 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Company>Quamotion bvba</Company>
     <Authors>Quamotion</Authors>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
 
   <ItemGroup>

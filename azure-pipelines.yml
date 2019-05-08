@@ -5,6 +5,23 @@ jobs:
 
   steps:
   - script: |
+      dotnet test src\Quamotion.Malaga.Tests\Quamotion.Malaga.Tests.csproj -l "trx;LogFileName=$(Build.ArtifactStagingDirectory)\Quamotion.Malaga.Tests.trx" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput="$(Build.ArtifactStagingDirectory)\Quamotion.Malaga.Tests.opencover.xml" /p:Include="[Quamotion.Malaga]*"
+      dotnet tool install -g dotnet-reportgenerator-globaltool
+      reportgenerator "-reports:$(Build.ArtifactStagingDirectory)\*.opencover.xml" "-targetdir:$(Build.ArtifactStagingDirectory)" -reporttypes:Cobertura
+    displayName: Test
+
+  - task: PublishTestResults@1
+    inputs:
+      testRunner: VSTest
+      testResultsFiles: $(Build.ArtifactStagingDirectory)/*.trx
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'cobertura'
+      summaryFileLocation: $(Build.ArtifactStagingDirectory)/Cobertura.xml
+      failIfCoverageEmpty: true
+
+  - script: |
       dotnet pack src\Quamotion.Malaga\Quamotion.Malaga.csproj -c Release -o $(Build.ArtifactStagingDirectory)
     displayName: Build and pack
 
