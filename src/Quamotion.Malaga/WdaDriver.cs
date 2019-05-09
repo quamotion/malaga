@@ -8,6 +8,12 @@ namespace Quamotion.Malaga
 {
     public class WdaDriver : RemoteWebDriver
     {
+        protected WdaDriver()
+            : base(WdaCapabilities.Default)
+        {
+            // This constructor should be used for mocking/unit tests only.
+        }
+
         public WdaDriver(Uri uri, string sessionId)
             : this(new WdaCommandExecutor(uri, sessionId, TimeSpan.FromSeconds(60)))
         {
@@ -58,6 +64,42 @@ namespace Quamotion.Malaga
         public ReadOnlyCollection<IWebElement> FindElementsByPredicateString(string classChain)
         {
             return this.FindElements("predicate string", classChain);
+        }
+
+        public virtual ScreenOrientation Orientation
+        {
+            get
+            {
+                var commandResponse = this.Execute(WdaDriverCommand.GetOrientation, null);
+                return (ScreenOrientation)Enum.Parse(typeof(ScreenOrientation), (string)commandResponse.Value);
+            }
+            set
+            {
+                this.Execute(
+                    WdaDriverCommand.SetOrientation,
+                    new Dictionary<string, object>()
+                    {
+                        { "orientation", value.ToString() }
+                    });
+            }
+        }
+
+        public virtual ScreenOrientation Rotation
+        {
+            get
+            {
+                var commandResponse = this.Execute(WdaDriverCommand.GetRotation, null);
+                return (ScreenOrientation)Enum.Parse(typeof(ScreenOrientation), (string)commandResponse.Value);
+            }
+            set
+            {
+                this.Execute(
+                    WdaDriverCommand.SetRotation,
+                    new Dictionary<string, object>()
+                    {
+                        { "rotation", value.ToString() }
+                    });
+            }
         }
     }
 }
