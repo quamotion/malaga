@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium.Remote;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
 using Xunit;
 
@@ -96,6 +97,38 @@ namespace Quamotion.Malaga.Tests
                 {
                     { "using", "predicate string" },
                     { "value", "another-predicate-string" }
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void SetOrientationTest()
+        {
+            this.driver.Orientation = ScreenOrientation.Landscape;
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(DriverCommand.SetOrientation, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "orientation", "Landscape" },
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void SetRotationTest()
+        {
+            this.driver.Rotation = ScreenOrientation.Landscape;
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(WdaDriverCommand.SetRotation, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "rotation", "Landscape" },
                 },
                 command.Parameters);
         }

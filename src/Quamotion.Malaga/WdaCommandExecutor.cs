@@ -12,7 +12,14 @@ namespace Quamotion.Malaga
             : base(addressOfRemoteServer, timeout)
         {
             this.sessionId = sessionId;
+
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.LaunchApp, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/launch"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetOrientation, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/orientation"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SetOrientation, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/orientation"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetRotation, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/rotation"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SetRotation, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/rotation"));
         }
 
         public override Response Execute(Command commandToExecute)
