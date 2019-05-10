@@ -6,7 +6,7 @@ namespace Quamotion.Malaga
 {
     public class WdaCommandExecutor : HttpCommandExecutor
     {
-        private readonly string sessionId;
+        private string sessionId;
 
         public WdaCommandExecutor(Uri addressOfRemoteServer, string sessionId, TimeSpan timeout)
             : base(addressOfRemoteServer, timeout)
@@ -31,6 +31,13 @@ namespace Quamotion.Malaga
 
             if (commandToExecute.Name == DriverCommand.NewSession)
             {
+                // Get the default session ID if the user has not provided an explicit session ID
+                if (this.sessionId == null)
+                {
+                    var status = this.Execute(new Command(DriverCommand.Status, string.Empty));
+                    this.sessionId = status.SessionId;
+                }
+
                 return new Response()
                 {
                     SessionId = sessionId,
