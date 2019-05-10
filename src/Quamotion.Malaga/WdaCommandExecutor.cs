@@ -20,6 +20,15 @@ namespace Quamotion.Malaga
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetRotation, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/rotation"));
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SetRotation, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/rotation"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetAlertText, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/alert/text"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetAlertButtons, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/wda/alert/buttons"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ClickAlertButton, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/alert/accept"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetSessionStatus, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/status"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Type, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/keyboard/type"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.PressDeviceButton, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/pressDeviceButton"));
         }
 
         public override Response Execute(Command commandToExecute)
