@@ -14,6 +14,11 @@ namespace Quamotion.Malaga
             // This constructor should be used for mocking/unit tests only.
         }
 
+        public WdaDriver(Uri uri)
+            : this(uri, null)
+        {
+        }
+
         public WdaDriver(Uri uri, string sessionId)
             : this(new WdaCommandExecutor(uri, sessionId, TimeSpan.FromSeconds(60)))
         {
