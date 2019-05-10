@@ -32,6 +32,12 @@ jobs:
     displayName: Publish Quamotion.Malaga
     condition: always()
 
+  - task: NuGetToolInstaller@1
+    inputs:
+      versionSpec: '4.9.4'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')) 
+    displayName: Install the latest version of NuGet
+
   - task: NuGetCommand@2
     continueOnError: true
     inputs:
