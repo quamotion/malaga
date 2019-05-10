@@ -4,6 +4,7 @@ using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace Quamotion.Malaga
 {
@@ -108,6 +109,103 @@ namespace Quamotion.Malaga
                         { "rotation", value.ToString() }
                     });
             }
+        }
+
+        /// <summary>
+        /// Sends a touch and hold event to the device.
+        /// </summary>
+        /// <param name="location">
+        /// The position at which to touch.
+        /// </param>
+        /// <param name="duration">
+        /// The duration of the touch event, in seconds.
+        /// </param>
+        public virtual void TouchAndHold(PointF location, TimeSpan duration)
+        {
+            // TODO: find a way to handle the timeout
+            // var timeout = Math.Max(Timeouts.TestServerRequestTimeout.TotalSeconds, 2 * duration.TotalSeconds);
+            this.Execute(
+                WdaDriverCommand.TouchAndHold,
+                new Dictionary<string, object>()
+                {
+                    { "x", location.X },
+                    { "y", location.Y },
+                    { "duration", duration.TotalSeconds }
+                });
+        }
+
+        /// <summary>
+        /// Sends a drag gesture to the device.
+        /// </summary>
+        /// <param name="from">
+        /// The location at which the drag gesture begins.
+        /// </param>
+        /// <param name="to">
+        /// The location at which the drag gesture ends.
+        /// </param>
+        /// <param name="duration">
+        /// The duration of the drag gesture.
+        /// </param>
+        public virtual void Drag(PointF from, PointF to, TimeSpan duration)
+        {
+            // Drag on iOS is slow, _very_ slow.
+            // Increase the timeout to make sure we don't time out (which would be a TaskCancelledException)
+            // TODO: find a way to work with the timeout
+            // var timeout = Math.Max(Timeouts.TestServerRequestTimeout.TotalSeconds, 15 + (5 * duration.TotalSeconds));
+
+            this.Execute(
+                WdaDriverCommand.Drag,
+                new Dictionary<string, object>()
+                {
+
+                    { "fromX", from.X },
+                            { "fromY", from.Y },
+                            { "toX", to.X },
+                            { "toY", to.Y },
+                            { "duration", duration.TotalSeconds }
+                });
+        }
+
+        /// <summary>
+        /// Performs a sequence of touch actions.
+        /// </summary>
+        /// <param name="touches">
+        /// The touch actions to execute.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// A <see cref="CancellationToken"/> which can be used to cancel the asynchronous operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task"/> which represents the asynchronous operation.
+        /// </returns>
+        public virtual void PerformTouch(Collection<TouchAction> touches)
+        {
+            double duration = 0;
+
+            foreach (var touch in touches)
+            {
+                if (touch.Action == TouchOperation.Wait)
+                {
+                    duration += (double)touch.Options["ms"];
+                }
+                else if (touch.Action == TouchOperation.LongPress)
+                {
+                    duration += (double)touch.Options["duration"];
+                }
+            }
+
+            // TODO: figure out a way to pass the timeout
+            // TimeSpan.FromMilliseconds(Timeouts.TestServerRequestTimeout.TotalMilliseconds + (2 * duration)),
+
+            var json = JsonConvert.SerializeObject(
+                new
+                {
+                    actions = touches
+                });
+
+            this.Execute(
+                WdaDriverCommand.PerformTouch
+                json);
         }
 
         /// <summary>

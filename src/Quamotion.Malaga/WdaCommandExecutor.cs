@@ -29,6 +29,10 @@ namespace Quamotion.Malaga
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Type, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/keyboard/type"));
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.PressDeviceButton, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/pressDeviceButton"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.TouchAndHold, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/touchAndHold"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Drag, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/dragfromtoforduration"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.PerformTouch, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/touch/perform"));
         }
 
         public override Response Execute(Command commandToExecute)
