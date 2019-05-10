@@ -9,7 +9,6 @@
 
         public const string GetOrientation = "getOrientation";
         public const string SetOrientation = "setOrientation";
-
         public const string GetRotation = "getRotation";
         public const string SetRotation = "setRotation";
 
@@ -21,5 +20,9 @@
 
         public const string Type = "wdaType";
         public const string PressDeviceButton = "deviceButton";
+
+        public const string TouchAndHold = "touchAndHold";
+        public const string Drag = "drag";
+        public const string PerformTouch = "performTouch";
     }
 }
