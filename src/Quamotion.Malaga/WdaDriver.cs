@@ -4,6 +4,8 @@ using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Reflection;
 
 namespace Quamotion.Malaga
 {
@@ -90,6 +92,35 @@ namespace Quamotion.Malaga
                         { "orientation", value.ToString() }
                     });
             }
+        }
+
+        public void DismissKeyboard(string label = "return")
+        {
+            if (string.IsNullOrEmpty(label))
+            {
+                this.Execute(
+                   WdaDriverCommand.DismissKeyboard,
+                   new Dictionary<string, object>()
+                   {
+                   });
+            }
+            else
+            {
+                var element = this.FindElementByPredicateString($"label='{label}'");
+                element.Click();
+            }
+        }
+
+        public byte[] GetScreenshot(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+            var commandResponse = this.Execute(
+                WdaDriverCommand.ElementScreenShot,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId}
+                });
+            return Convert.FromBase64String((string)commandResponse.Value);
         }
 
         public virtual ScreenOrientation Rotation
@@ -194,6 +225,13 @@ namespace Quamotion.Malaga
                 {
                     { "button", (int)button }
                 });
+        }
+
+        private string GetElementId(IWebElement webElement)
+        {
+            var remoteWebElementType = typeof(RemoteWebElement);
+            var elementIdField = remoteWebElementType.GetField("elementId", BindingFlags.Instance | BindingFlags.NonPublic);
+            return elementIdField.GetValue(webElement) as string;
         }
     }
 }
