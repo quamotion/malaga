@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System.Collections.Generic;
+using System.IO;
 using Xunit;
 
 namespace Quamotion.Malaga.Tests
@@ -14,6 +15,19 @@ namespace Quamotion.Malaga.Tests
         {
             this.commandExecutor = new MockCommandExecutor();
             this.driver = new WdaDriver(this.commandExecutor);
+        }
+
+        [Fact]
+        public void GetScreenshotTest()
+        {
+            var element = new RemoteWebElement(this.driver, "4D000000-0000-0000-B42A-000000000000");
+            var image = this.driver.GetScreenshot(element);
+
+            Assert.Single(commandExecutor.Commands);
+
+            var originalScreenshot = File.ReadAllBytes("screenshot.jpg");
+
+            Assert.Equal(originalScreenshot, image);
         }
 
         [Fact]

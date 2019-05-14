@@ -21,5 +21,8 @@
 
         public const string Type = "wdaType";
         public const string PressDeviceButton = "deviceButton";
+        public const string DismissKeyboard = "dismissKeyboard";
+
+        public const string ElementScreenShot = "wdaElementScreenshot";
     }
 }
