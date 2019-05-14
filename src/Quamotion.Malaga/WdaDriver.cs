@@ -96,7 +96,7 @@ namespace Quamotion.Malaga
 
         public void DismissKeyboard(string label = "return")
         {
-            if(string.IsNullOrEmpty(label))
+            if (string.IsNullOrEmpty(label))
             {
                 this.Execute(
                    WdaDriverCommand.DismissKeyboard,
@@ -122,7 +122,7 @@ namespace Quamotion.Malaga
                 });
             return Convert.FromBase64String((string)commandResponse.Value);
         }
-            
+
         public virtual ScreenOrientation Rotation
         {
             get
@@ -225,6 +225,8 @@ namespace Quamotion.Malaga
                 {
                     { "button", (int)button }
                 });
+        }
+
         private string GetElementId(IWebElement webElement)
         {
             var remoteWebElementType = typeof(RemoteWebElement);
