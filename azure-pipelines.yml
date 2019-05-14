@@ -47,13 +47,3 @@ jobs:
       nuGetFeedType: external
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')) 
     displayName: Publish NuGet package
-
-  - task: NuGetCommand@2
-    continueOnError: true
-    inputs:
-      command: push
-      packagesToPush: '$(Build.ArtifactStagingDirectory)\Quamotion.Malaga.*.snupkg'
-      publishFeedCredentials: 'NuGet'
-      nuGetFeedType: external
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')) 
-    displayName: Publish NuGet source package
