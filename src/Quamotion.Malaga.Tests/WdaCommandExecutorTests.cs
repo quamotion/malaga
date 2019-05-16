@@ -42,29 +42,5 @@ namespace Quamotion.Malaga.Tests
             Assert.Equal(endPoint, commandInfo.ResourcePath);
             Assert.Equal(method, commandInfo.Method);
         }
-
-        [Fact]
-        public void Commands()
-        {
-            var executor = new WdaCommandExecutor(new Uri("http://localhost"), "my-session-id", TimeSpan.FromSeconds(1));
-            var commandInfoRepository = executor.CommandInfoRepository;
-
-            var commandInfoRepositoryType = typeof(CommandInfoRepository);
-            var commandDictionaryField = commandInfoRepositoryType.GetField("commandDictionary", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            var commandDictionary = commandDictionaryField.GetValue(commandInfoRepository) as System.Collections.Generic.Dictionary<string, CommandInfo>;
-            using (var file = new System.IO.StreamWriter(@"d:\temp\routes.txt"))
-            {
-                foreach (var command in commandDictionary)
-                {
-                    var name = command.Key;
-                    var method = command.Value.Method;
-                    var path = command.Value.ResourcePath;
-
-                    file.WriteLine($"{name}, {method}, {path}");
-                }
-            }
-
-        }
-
     }
 }
