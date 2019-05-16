@@ -33,6 +33,39 @@ namespace Quamotion.Malaga
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ElementScreenShot, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/element/{elementId}/screenshot"));
 
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetRectangle, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/element/{elementId}/rect"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.IsDisplayed, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/element/{elementId}/displayed"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.IsAccessible, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/wda/element/{elementId}/accessible"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.IsAcessibilityContainer, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/wda/element/{elementId}/accessibilityContainer"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Swipe, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/swipe"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Pinch, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/pinch"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ElementDoubleTap, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/doubleTap"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.TwoFingerTap, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/twoFingerTap"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ElementTouchAndHold, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/touchAndHold"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Scroll, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/scroll"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ElementDragFromToForDuration, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/dragfromtoforduration"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.DragFromToForDuration, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/dragfromtoforduration"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.Tap, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/tap/{elementId}"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.TouchAndHold, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/touchAndHold"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.DoubleTap, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/doubleTap"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.WheelSelect, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/pickerwheel/{elementId}/select"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ForceTouch, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/forceTouch"));
         }
 
         public override Response Execute(Command commandToExecute)

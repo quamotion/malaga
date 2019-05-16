@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
@@ -48,6 +49,52 @@ namespace Quamotion.Malaga.Tests
                     SessionId = Guid.NewGuid().ToString(),
                     Status = WebDriverResult.Success,
                     Value = Convert.ToBase64String(screenshot)
+                };
+            }
+
+            if (commandToExecute.Name == WdaDriverCommand.GetRectangle)
+            {
+                return new Response()
+                {
+                    SessionId = Guid.NewGuid().ToString(),
+                    Status = WebDriverResult.Success,
+                    Value = new Dictionary<string, object>()
+                    {
+                        { "x", 100L},
+                        { "y", 200L},
+                        { "width", 50L},
+                        { "height", 150L}
+                    }
+                };
+            }
+
+            if (commandToExecute.Name == WdaDriverCommand.IsDisplayed)
+            {
+                return new Response()
+                {
+                    SessionId = Guid.NewGuid().ToString(),
+                    Status = WebDriverResult.Success,
+                    Value = true
+                };
+            }
+
+            if (commandToExecute.Name == WdaDriverCommand.IsAccessible)
+            {
+                return new Response()
+                {
+                    SessionId = Guid.NewGuid().ToString(),
+                    Status = WebDriverResult.Success,
+                    Value = false
+                };
+            }
+
+            if (commandToExecute.Name == WdaDriverCommand.IsAcessibilityContainer)
+            {
+                return new Response()
+                {
+                    SessionId = Guid.NewGuid().ToString(),
+                    Status = WebDriverResult.Success,
+                    Value = true
                 };
             }
 
