@@ -24,5 +24,39 @@
         public const string DismissKeyboard = "dismissKeyboard";
 
         public const string ElementScreenShot = "wdaElementScreenshot";
+
+        public const string GetRectangle = "wdaGetRectangle";
+
+        public const string IsDisplayed = "wdaIsDisplayed";
+
+        public const string IsAccessible = "wdaIsAccessible";
+
+        public const string IsAcessibilityContainer = "wdaIsAcessibilityContainer";
+
+        public const string Swipe = "wdaSwipe";
+
+        public const string Pinch = "wdaPinch";
+
+        public const string ElementDoubleTap = "wdaElementDoubleTap";
+
+        public const string TwoFingerTap = "wdaTwoFingerTap";
+
+        public const string ElementTouchAndHold = "wdaElementTouchAndHold";
+
+        public const string Scroll = "wdaScroll";
+
+        public const string ElementDragFromToForDuration = "wdaElementDragFromToForDuration";
+
+        public const string DragFromToForDuration = "wdaDragFromToForDuration";
+
+        public const string Tap = "wdaTap";
+
+        public const string TouchAndHold = "wdaTouchAndHold";
+
+        public const string DoubleTap = "wdaDoubleTap";
+
+        public const string WheelSelect = "wdaWheelSelect";
+
+        public const string ForceTouch = "wdaForceTouch";
     }
 }

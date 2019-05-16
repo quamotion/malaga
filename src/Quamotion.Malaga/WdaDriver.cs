@@ -4,8 +4,10 @@ using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
+using System.Drawing;
+using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace Quamotion.Malaga
 {
@@ -225,6 +227,293 @@ namespace Quamotion.Malaga
                 {
                     { "button", (int)button }
                 });
+        }
+
+        public virtual Rectangle GetRectangle (IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            var response = this.Execute(
+                WdaDriverCommand.GetRectangle,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId }
+                });
+
+            var value = response.Value as Dictionary<string, object>;
+            var x = (int)(long)value["x"];
+            var y = (int)(long)value["y"];
+            var width = (int)(long)value["width"];
+            var height = (int)(long)value["height"];
+
+            return new Rectangle(x, y, width, height);
+        }
+
+        public virtual bool IsDisplayed(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            var response = this.Execute(
+                WdaDriverCommand.IsDisplayed,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId }
+                });
+
+            return (bool)response.Value;
+        }
+
+        public virtual bool IsAccessible(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            var response = this.Execute(
+                WdaDriverCommand.IsAccessible,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId }
+                });
+
+            return (bool)response.Value;
+        }
+
+        public virtual bool IsAcessibilityContainer(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            var response = this.Execute(
+                WdaDriverCommand.IsAcessibilityContainer,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId }
+                });
+
+            return (bool)response.Value;
+        }
+
+        public virtual void Swipe(IWebElement element, Direction direction)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.Swipe,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "direction",  this.GetEnumMemberValue(direction)}
+                });
+        }
+
+        public virtual void Pinch(IWebElement element, double scale, double velocity)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.Pinch,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "scale", scale},
+                    { "velocity", velocity}
+                });
+        }
+
+        public virtual void DoubleTap(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.ElementDoubleTap,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId }
+                });
+        }
+
+        public virtual void Tap(IWebElement element, double x, double y)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.Tap,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "x", x },
+                    { "y", y }
+                });
+        }
+
+
+        public virtual void TwoFingerTap(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.TwoFingerTap,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId }
+                });
+        }
+
+        public virtual void TouchAndHold(IWebElement element, double duration)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.ElementTouchAndHold,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "duration", duration}
+                });
+        }
+
+        public virtual void TouchAndHold(double x, double y, double duration)
+        {
+            this.Execute(
+                WdaDriverCommand.TouchAndHold,
+                new Dictionary<string, object>()
+                {
+                    { "x", x },
+                    { "y", y },
+                    { "duration", duration}
+                });
+        }
+
+        public virtual void ScrollToVisible(IWebElement element)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.Scroll,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "toVisible", true}
+                });
+        }
+
+        public virtual void ScrollToName(IWebElement container, string name)
+        {
+            var elementId = this.GetElementId(container);
+
+            this.Execute(
+                WdaDriverCommand.Scroll,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "name", name}
+                });
+        }
+        public virtual void ScrollToPredicateString(IWebElement container, string predicateString)
+        {
+            var elementId = this.GetElementId(container);
+
+            this.Execute(
+                WdaDriverCommand.Scroll,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "predicateString", predicateString}
+                });
+        }
+
+        public virtual void Scroll(IWebElement container, Direction direction, double distance)
+        {
+            var elementId = this.GetElementId(container);
+
+            this.Execute(
+                WdaDriverCommand.Scroll,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "direction",  this.GetEnumMemberValue(direction)},
+                    { "distance", distance}
+                });
+        }
+
+
+        public virtual void Drag(IWebElement element, double fromX, double fromY, double toX, double toY, double duration)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.ElementDragFromToForDuration,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "fromX", fromX },
+                    { "fromY", fromY },
+                    { "toX", toX },
+                    { "toY", toY },
+                    { "duration", duration }
+                });
+        }
+
+        public virtual void Drag(double fromX, double fromY, double toX, double toY, double duration)
+        {
+            this.Execute(
+                WdaDriverCommand.DragFromToForDuration,
+                new Dictionary<string, object>()
+                {
+                    { "fromX", fromX },
+                    { "fromY", fromY },
+                    { "toX", toX },
+                    { "toY", toY },
+                    { "duration", duration }
+                });
+        }
+
+        public virtual void ForceTouch(IWebElement element, double x, double y, double pressure, double duration)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.ForceTouch,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "x", x },
+                    { "y", y },
+                    { "pressure", pressure },
+                    { "duration", duration }
+                });
+        }
+
+        public virtual void WheelSelect(IWebElement element, Order order, double offset = 0.2)
+        {
+            var elementId = this.GetElementId(element);
+
+            this.Execute(
+                WdaDriverCommand.WheelSelect,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", elementId },
+                    { "order", this.GetEnumMemberValue(order) },
+                    { "offset", offset }
+                });
+        }
+
+        private string GetEnumMemberValue(Enum value)
+        {
+            var enumMember = value.GetType()
+                                    .GetTypeInfo()
+                                    .GetMember(value.ToString())
+                                    .First()
+                                    .GetCustomAttributes(false)
+                                    .OfType<EnumMemberAttribute>()
+                                    .LastOrDefault();
+
+            if (enumMember != null && enumMember.Value != null)
+            {
+                return enumMember.Value;
+            }
+            else
+            {
+                return value.ToString();
+            }
         }
 
         private string GetElementId(IWebElement webElement)
