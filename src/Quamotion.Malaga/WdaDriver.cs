@@ -7,8 +7,10 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
+[assembly: InternalsVisibleTo("Quamotion.Malaga.Tests")]
 namespace Quamotion.Malaga
 {
     public class WdaDriver : RemoteWebDriver
@@ -21,13 +23,23 @@ namespace Quamotion.Malaga
             // This constructor should be used for mocking/unit tests only.
         }
 
+        public WdaDriver(Uri uri, TimeSpan serverResponseTimeout)
+            : this(uri, null, serverResponseTimeout)
+        {
+        }
+
         public WdaDriver(Uri uri)
-            : this(uri, null)
+            : this(uri, null, TimeSpan.FromSeconds(60))
         {
         }
 
         public WdaDriver(Uri uri, string sessionId)
             : this(new WdaCommandExecutor(uri, sessionId, TimeSpan.FromSeconds(60)))
+        {
+        }
+
+        public WdaDriver(Uri uri, string sessionId, TimeSpan serverResponseTimeout)
+            : this(new WdaCommandExecutor(uri, sessionId, serverResponseTimeout))
         {
         }
 
@@ -229,7 +241,7 @@ namespace Quamotion.Malaga
                 });
         }
 
-        public virtual Rectangle GetRectangle (IWebElement element)
+        public virtual Rectangle GetRectangle(IWebElement element)
         {
             var elementId = this.GetElementId(element);
 
@@ -494,6 +506,14 @@ namespace Quamotion.Malaga
                     { "order", this.GetEnumMemberValue(order) },
                     { "offset", offset }
                 });
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ICommandExecutor"/> which executes commands for this driver.
+        /// </summary>
+        internal ICommandExecutor GetCommandExecutor()
+        {
+            return base.CommandExecutor;
         }
 
         private string GetEnumMemberValue(Enum value)
