@@ -14,6 +14,8 @@ namespace Quamotion.Malaga
             this.sessionId = sessionId;
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.LaunchApp, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/launch"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.TerminateApp, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/terminate"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SendKeys, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/keys"));
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetOrientation, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/orientation"));
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SetOrientation, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/orientation"));

@@ -48,6 +48,26 @@ namespace Quamotion.Malaga
         {
         }
 
+        public void SendKeys(string keys)
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "value", keys.ToArray() }
+            };
+            this.Execute(
+                WdaDriverCommand.SendKeys, parameters);
+        }
+
+        public Response TerminateApp(string bundleId)
+        {
+            var parameters = new Dictionary<string, object>()
+            {
+                { "bundleId", bundleId }
+            };
+            return this.Execute(
+                WdaDriverCommand.TerminateApp, parameters);
+        }
+
         public Response LaunchApp(string bundleId, bool shouldWaitForQuiescence = false, Collection<string> arguments = null, Dictionary<string, string> environment = null)
         {
             var parameters = new Dictionary<string, object>()
