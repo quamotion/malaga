@@ -8,6 +8,8 @@ namespace Quamotion.Malaga.Tests
     {
         [Theory]
         [InlineData(WdaDriverCommand.LaunchApp, CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/launch")]
+        [InlineData(WdaDriverCommand.TerminateApp, CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/terminate")]
+        [InlineData(WdaDriverCommand.SendKeys, CommandInfo.PostCommand, "/session/{sessionId}/wda/keys")]
         [InlineData(WdaDriverCommand.GetOrientation, CommandInfo.GetCommand, "/session/{sessionId}/orientation")]
         [InlineData(WdaDriverCommand.SetOrientation, CommandInfo.PostCommand, "/session/{sessionId}/orientation")]
         [InlineData(WdaDriverCommand.GetRotation, CommandInfo.GetCommand, "/session/{sessionId}/rotation")]

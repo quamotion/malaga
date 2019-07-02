@@ -1,7 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Xunit;
 
 namespace Quamotion.Malaga.Tests
@@ -28,6 +30,38 @@ namespace Quamotion.Malaga.Tests
             var originalScreenshot = File.ReadAllBytes("screenshot.jpg");
 
             Assert.Equal(originalScreenshot, image);
+        }
+
+        [Fact]
+        public void TerminateAppTest()
+        {
+            var result = this.driver.TerminateApp("mobi.quamotion.app");
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(WdaDriverCommand.TerminateApp, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "bundleId", "mobi.quamotion.app" }
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void SendKeysTest()
+        {
+            this.driver.SendKeys("test");
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(WdaDriverCommand.SendKeys, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "value", "test" }
+                },
+                command.Parameters);
         }
 
         [Fact]

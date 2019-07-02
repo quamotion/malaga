@@ -6,6 +6,9 @@
         /// Launch App Command.
         /// </summary>
         public const string LaunchApp = "launchApp";
+        public const string TerminateApp = "terminateApp";
+
+        public const string SendKeys = "sendKeys";
 
         public const string GetOrientation = "getOrientation";
         public const string SetOrientation = "setOrientation";
