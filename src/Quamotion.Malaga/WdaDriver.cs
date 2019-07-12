@@ -376,6 +376,17 @@ namespace Quamotion.Malaga
                 });
         }
 
+        public virtual void Tap(double x, double y)
+        {
+            this.Execute(
+                WdaDriverCommand.Tap,
+                new Dictionary<string, object>()
+                {
+                    { "elementId", "00000000-0000-0000-0000-000000000000" },
+                    { "x", x },
+                    { "y", y }
+                });
+        }
 
         public virtual void TwoFingerTap(IWebElement element)
         {

@@ -480,7 +480,7 @@ namespace Quamotion.Malaga.Tests
         }
 
         [Fact]
-        public void TapTest()
+        public void ElementTapTest()
         {
             var appIcon = new RemoteWebElement(this.driver, "4D000000-0000-0000-B42A-000000000000");
             this.driver.Tap(appIcon, 20, 60);
@@ -492,6 +492,24 @@ namespace Quamotion.Malaga.Tests
                 new Dictionary<string, object>
                 {
                     { "elementId", "4D000000-0000-0000-B42A-000000000000" },
+                    { "x", 20.0},
+                    { "y", 60.0}
+                },
+                command.Parameters);
+        }
+
+        [Fact]
+        public void TapTest()
+        {
+            this.driver.Tap(20, 60);
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal(WdaDriverCommand.Tap, command.Name);
+            Assert.Equal(
+                new Dictionary<string, object>
+                {
+                    { "elementId", "00000000-0000-0000-0000-000000000000" },
                     { "x", 20.0},
                     { "y", 60.0}
                 },
