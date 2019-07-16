@@ -65,6 +65,19 @@ namespace Quamotion.Malaga.Tests
         }
 
         [Fact]
+        public void WindowSizeTest()
+        {
+            var size = this.driver.Manage().Window.Size;
+
+            var command = Assert.Single(commandExecutor.Commands);
+
+            Assert.Equal("getWindowRect", command.Name);
+
+            Assert.Equal(50, size.Width);
+            Assert.Equal(150, size.Height);
+        }
+
+        [Fact]
         public void LaunchAppTest()
         {
             var result = this.driver.LaunchApp("mobi.quamotion.app");

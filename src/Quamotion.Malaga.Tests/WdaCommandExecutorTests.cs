@@ -9,11 +9,14 @@ namespace Quamotion.Malaga.Tests
         [Theory]
         [InlineData(WdaDriverCommand.LaunchApp, CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/launch")]
         [InlineData(WdaDriverCommand.TerminateApp, CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/terminate")]
-        [InlineData(WdaDriverCommand.SendKeys, CommandInfo.PostCommand, "/session/{sessionId}/wda/keys")]
+        
+
         [InlineData(WdaDriverCommand.GetOrientation, CommandInfo.GetCommand, "/session/{sessionId}/orientation")]
         [InlineData(WdaDriverCommand.SetOrientation, CommandInfo.PostCommand, "/session/{sessionId}/orientation")]
         [InlineData(WdaDriverCommand.GetRotation, CommandInfo.GetCommand, "/session/{sessionId}/rotation")]
         [InlineData(WdaDriverCommand.SetRotation, CommandInfo.PostCommand, "/session/{sessionId}/rotation")]
+
+        [InlineData(WdaDriverCommand.SendKeys, CommandInfo.PostCommand, "/session/{sessionId}/wda/keys")]
         [InlineData(WdaDriverCommand.DismissKeyboard, CommandInfo.PostCommand, "/session/{sessionId}/wda/keyboard/dismiss")]
         [InlineData(WdaDriverCommand.ElementScreenShot, CommandInfo.GetCommand, "/session/{sessionId}/element/{elementId}/screenshot")]
 
@@ -35,7 +38,8 @@ namespace Quamotion.Malaga.Tests
         [InlineData(WdaDriverCommand.DoubleTap, CommandInfo.PostCommand, "/session/{sessionId}/wda/doubleTap")]
         [InlineData(WdaDriverCommand.WheelSelect, CommandInfo.PostCommand, "/session/{sessionId}/wda/pickerwheel/{elementId}/select")]
         [InlineData(WdaDriverCommand.ForceTouch, CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/forceTouch")]
-
+        [InlineData("getWindowSize", CommandInfo.GetCommand, "/session/{sessionId}/window/size")]
+        [InlineData("sendKeysToActiveElement", CommandInfo.PostCommand, "/session/{sessionId}/wda/keys")]
         public void CommandHandled(string command, string method, string endPoint)
         {
             var executor = new WdaCommandExecutor(new Uri("http://localhost"), "my-session-id", TimeSpan.FromSeconds(1));
