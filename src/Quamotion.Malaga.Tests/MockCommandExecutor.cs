@@ -98,6 +98,20 @@ namespace Quamotion.Malaga.Tests
                 };
             }
 
+            if (commandToExecute.Name == "getWindowRect")
+            {
+                return new Response()
+                {
+                    SessionId = Guid.NewGuid().ToString(),
+                    Status = WebDriverResult.Success,
+                    Value = new Dictionary<string, object>()
+                    {
+                        { "width", 50L},
+                        { "height", 150L}
+                    }
+                };
+            }
+
             return new Response();
         }
 

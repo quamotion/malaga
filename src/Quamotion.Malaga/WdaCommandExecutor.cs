@@ -1,6 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace Quamotion.Malaga
 {
@@ -13,9 +16,17 @@ namespace Quamotion.Malaga
         {
             this.sessionId = sessionId;
 
+            // update some routes to match wda
+            var field = typeof(CommandInfoRepository).GetField("commandDictionary", BindingFlags.Instance |BindingFlags.NonPublic);
+            var commandDictionary = field.GetValue(this.CommandInfoRepository) as Dictionary<string, CommandInfo>;
+
+            commandDictionary["sendKeysToActiveElement"] = new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/keys");
+            commandDictionary["getWindowSize"] = new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/window/size");
+
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.LaunchApp, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/launch"));
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.TerminateApp, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/apps/terminate"));
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SendKeys, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/keys"));
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.HideKeyboard, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/keyboard/dismiss"));
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetOrientation, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/orientation"));
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.SetOrientation, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/orientation"));
