@@ -49,6 +49,15 @@ namespace Quamotion.Malaga.Tests
         }
 
         [Fact]
+        public void GetActiveElementTest()
+        {
+            var element = this.driver.GetActiveElement();
+            Assert.NotNull(element);
+
+            Assert.Equal("56000000 -0000-0000-3A17-000000000000", this.driver.GetElementId(element));
+        }
+
+        [Fact]
         public void SendKeysTest()
         {
             this.driver.SendKeys("test");

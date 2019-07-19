@@ -52,6 +52,19 @@ namespace Quamotion.Malaga.Tests
                 };
             }
 
+            if (commandToExecute.Name == WdaDriverCommand.GetActiveElement)
+            {
+                return new Response()
+                {
+                    SessionId = Guid.NewGuid().ToString(),
+                    Status = WebDriverResult.Success,
+                    Value = new Dictionary<string, object>()
+                    {
+                        { "ELEMENT", "56000000 -0000-0000-3A17-000000000000"}
+                    }
+                };
+            }
+
             if (commandToExecute.Name == WdaDriverCommand.GetRectangle)
             {
                 return new Response()

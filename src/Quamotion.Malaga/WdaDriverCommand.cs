@@ -62,5 +62,7 @@
         public const string WheelSelect = "wdaWheelSelect";
 
         public const string ForceTouch = "wdaForceTouch";
+
+        public const string GetActiveElement = "wdaGetActiveElement";
     }
 }
