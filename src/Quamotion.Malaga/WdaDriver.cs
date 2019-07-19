@@ -90,6 +90,13 @@ namespace Quamotion.Malaga
                 WdaDriverCommand.LaunchApp, parameters);
         }
 
+        public IWebElement GetActiveElement()
+        {
+            var commandResponse = this.Execute(WdaDriverCommand.GetActiveElement, null);
+            var responseValue = commandResponse.Value as Dictionary<string, object>;
+            return new RemoteWebElement(this, responseValue["ELEMENT"].ToString());
+        }
+
         public IWebElement FindElementByClassChain(string classChain)
         {
             return this.FindElement("class chain", classChain);
@@ -547,6 +554,13 @@ namespace Quamotion.Malaga
             return base.CommandExecutor;
         }
 
+        internal string GetElementId(IWebElement webElement)
+        {
+            var remoteWebElementType = typeof(RemoteWebElement);
+            var elementIdField = remoteWebElementType.GetField("elementId", BindingFlags.Instance | BindingFlags.NonPublic);
+            return elementIdField.GetValue(webElement) as string;
+        }
+
         private string GetEnumMemberValue(Enum value)
         {
             var enumMember = value.GetType()
@@ -565,13 +579,6 @@ namespace Quamotion.Malaga
             {
                 return value.ToString();
             }
-        }
-
-        private string GetElementId(IWebElement webElement)
-        {
-            var remoteWebElementType = typeof(RemoteWebElement);
-            var elementIdField = remoteWebElementType.GetField("elementId", BindingFlags.Instance | BindingFlags.NonPublic);
-            return elementIdField.GetValue(webElement) as string;
         }
     }
 }

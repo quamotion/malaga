@@ -79,6 +79,8 @@ namespace Quamotion.Malaga
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.WheelSelect, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/pickerwheel/{elementId}/select"));
 
             this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.ForceTouch, new CommandInfo(CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/forceTouch"));
+
+            this.CommandInfoRepository.TryAddCommand(WdaDriverCommand.GetActiveElement, new CommandInfo(CommandInfo.GetCommand, "/session/{sessionId}/element/active"));
         }
 
         public override Response Execute(Command commandToExecute)

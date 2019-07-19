@@ -37,6 +37,7 @@ namespace Quamotion.Malaga.Tests
         [InlineData(WdaDriverCommand.DoubleTap, CommandInfo.PostCommand, "/session/{sessionId}/wda/doubleTap")]
         [InlineData(WdaDriverCommand.WheelSelect, CommandInfo.PostCommand, "/session/{sessionId}/wda/pickerwheel/{elementId}/select")]
         [InlineData(WdaDriverCommand.ForceTouch, CommandInfo.PostCommand, "/session/{sessionId}/wda/element/{elementId}/forceTouch")]
+        [InlineData(WdaDriverCommand.GetActiveElement, CommandInfo.GetCommand, "/session/{sessionId}/element/active")]
         [InlineData("getWindowSize", CommandInfo.GetCommand, "/session/{sessionId}/window/size")]
         [InlineData("sendKeysToActiveElement", CommandInfo.PostCommand, "/session/{sessionId}/wda/keys")]
         public void CommandHandled(string command, string method, string endPoint)
